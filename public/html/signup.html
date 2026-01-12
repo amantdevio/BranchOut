@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../ico/favicon.svg" type="image/x-icon">
+    <title>SignUp - BranchOut</title>
+    <link rel="stylesheet" href="../css/signup.css">
+</head>
+<body>
+    <nav class="navbar">
+        <h1 class="siteHeading greeting">BranchOut</h1>
+    </nav>
+    <main>
+        <div class="subheadings">
+            <h2 class="subhead">Chat with random students</h2>
+            <h2 class="subhead">BranchOut - Where the coversations begin...</h2>
+            <h2 class="subhead "></h2>
+            <a href="login.html" class="loginBtn">Already have an account?</a>
+        </div>
+        <div class="form-container" id="form-container" >
+            <form id="signupForm" style="display: flex; flex-direction: column;">
+                <h1 class="signup">SignUp</h1>
+
+                <label for="student_id">Student Id</label>
+                <input type="text" name="student_id" id="student_id" placeholder="Enrollment Number" required><br>
+                
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" placeholder="Email address" required><br>
+                
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" placeholder="Password" required><br>
+                
+                <label for="pseudonym">Username</label>
+                <input type="text" name="pseudonym" id="pseudonym" placeholder="Pseudonym" required><br>
+                
+                <label for="branch">Branch</label>
+                <!-- <input type="select" name="branch" id="branch" placeholder="Branch" required><br> -->
+                <select name="branch" id="branch">
+                    <div class="branch-option">
+                    <option value="">Choose option</option>
+                    <option value="BCA">BCA</option>
+                    <option value="BTech-CSE">BTech</option>
+                    <option value="MCA">MCA</option>
+                    <option value="BBA">BBA</option>
+                    <option value="Diploma">Diploma</option>
+                    <option value="MBA">MBA</option>
+                    <option value="MTech">MTech</option>
+                    <option value="MTech">BA</option>
+                    <option value="B.Sc">B.Sc</option>
+                    <option value="M.Sc">M.Sc</option>
+                    <option value="MA">MA</option>
+                    <option value="B.Arch">B.Arch</option>
+                    <option value="B.Des">B.Des</option>
+                    <option value="BSW">BSW</option>
+                    <option value="M.Lib">M.Lib</option>
+                    <option value="MSW">MSW</option>
+                    <option value="MBA">MBA</option>
+                    <option value="B.Lib">B.Lib</option>
+                    <option value="B.Com">B.Com</option>
+                    <option value="BFA">BFW</option>
+                    <option value="M.Com">M.Com</option>
+                    <option value="MFA">MFA</option>
+                    <option value="BALLB">BALLB</option>
+                    <option value="BBALLB">BBALLB</option>
+                    <option value="B.Com.LLB">B.Com.LLB</option>
+                    <option value="LL.B">LL.B</option>
+                    <option value="LL.M">LL.M</option>
+                    <option value="B.Pharma">B.Pharma</option>
+                    <option value="BPT">BPT</option>
+                    <option value="BXRT">BXRT</option>
+                    <option value="B.Plan">B.Plan</option>
+                    <option value="M.Plan">M.Plan</option>
+                    <option value="B.Ed">B.Ed</option>
+                    <option value="Ph.D">Ph.D.</option>
+                    <option value="D.El.Ed">D.El.Ed</option>
+                    </div>
+                </select><br>
+                
+                <label for="secret_code">Secret Code</label>
+                <input type="text" name="secret_code" id="secret_code" placeholder="Enter secret code" required>
+
+                <div class="msg-container" id="msg-container"></div>
+
+
+                <div class="terms">
+                    <input type="checkbox" required/>
+                    <span class="terms-text">I accepted all the <a href="about.html" style="color: #38bdf8;">terms and condition</a> applied.</span>
+                </div>
+
+                <br>
+                <button type="submit" class="signupBtn" id="signup-submit-btn">
+                    <span id="signup-btn-text">Signup</span>
+                    <div id="signup-btn-loader" class="btn-loader" style="display: none;"></div>
+                </button>
+
+
+            </form>
+            <div id="success-content" style="display: none;">
+                <h2 style="color: #38bdf8;">Account Created!</h2>
+                <p style="color: #9ca3af;">Redirecting to login in <span id="countdown">5</span> seconds...</p>
+            </div>
+        </div>
+    </main>
+</body>
+<script src="../js/auth.js"></script>
+<script>
+    const select=document.getElementById('branch');
+
+    select.addEventListener('click',()=>{
+        console.log("Working")
+        const placeholder = select.querySelector('option[value=""]');
+        if(placeholder){
+            placeholder.remove();
+        }
+    })
+</script>
+</html>

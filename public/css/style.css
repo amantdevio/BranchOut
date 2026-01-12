@@ -1,0 +1,251 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap');
+
+:root{
+    --primary-blue: #38bdf8;
+    --dark-bg: #0f172a;
+    --card-bg: #1e293b;
+    --text-gray: #9ca3af;
+}
+
+*{
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+body{
+    background-color: var(--dark-bg);
+    color: #fff;
+    line-height: 1.6rem;
+    overflow-x: hidden;
+}
+
+.page-wrapper{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Hero Section  */
+.hero-section{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 60px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.hero-content{
+    text-align: center;
+    margin-bottom: 80px;
+    animation: fadeIn 1s ease-out;
+}
+
+.site-name{
+    font-size: clamp(3.5rem, 12vw, 6.5rem);
+    font-weight: 700;
+    letter-spacing: -4px;
+    line-height: 1;
+    background: linear-gradient(to right, #38bdf8, #818cf8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 10px 20px rgba(56, 189, 248, 0.2);
+    margin-bottom: 20px;
+}
+
+.hero-tagline{
+    font-size: clamp(1.2rem,4vw,1.8rem);
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.hero-description{
+    color: var(--text-gray);
+    max-width: 600px;
+    margin: 0 auto 40px auto;
+}
+
+/* Buttons */
+.cta-buttons{
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.btn{
+    text-decoration: none;
+    padding: 16px 40px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    text-align: center;
+    min-width: 150px; 
+}
+
+.btn-primary{
+    background-color: var(--primary-blue);
+    color: var(--dark-bg);
+}
+
+.btn-secondary{
+    background-color: var(--card-bg);
+    color: #fff;
+    border: 1px solid #334155;
+}
+
+.btn:hover{
+    transform: translateY(-3px);
+    filter: brightness(1.1);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.about-link{
+    font-size: 0.9rem;
+    color: var(--text-gray);
+}
+
+.about-link a{
+    color: var(--primary-blue);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+
+/* Feature grid  */
+.features-grid{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+    max-width: 1100px;
+    margin: 40px auto;
+}
+
+.feature-card{
+    flex: 1;
+    background-color: var(--card-bg);
+    padding: 25px;
+    border-radius: 16px;
+    border: 1px solid #344155;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.feature-card:hover{
+    border-color: var(--primary-blue);
+    transform: translateY(-5px);
+    background-color: #1e2c45;
+}
+
+.feature-card .icon{
+    font-size: 2rem;
+    margin-bottom: 20px;
+    background: rgba(56,189,248,0.1);
+    width: 45px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.feature-card h3{
+    font-size: 1.3rem;
+    color: #fff;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.feature-card p{
+    color: var(--text-gray);
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+/* Footer  */
+.site-footer{
+    padding: 60px 20px;
+    text-align: center;
+    border-top: 1px solid #1e293b;
+    color: var(--text-gray);
+    font-size: 0.9rem;
+}
+
+.copyright{
+    display: block;
+    margin-top: 15px;
+    color: var(--primary-blue);
+    font-weight: 600;
+}
+
+/* Social Links */
+.svgContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    padding-left: 10px;
+    margin-top: 10px;
+}
+
+.svgContainer svg{
+    width: 22px;
+    height: 24px;
+    transition: transform 0.3s ease, filter 0.3s ease;
+    cursor: pointer;
+}
+
+.svgContainer svg:hover{
+    transform: translateY(-3px);
+    filter: brightness(1.2);
+}
+
+/* Mobile Adjustment */
+@media(max-width: 1024px){
+    .features-grid{
+        gap: 15px;
+        padding: 0 20px;
+    }
+}
+
+@media (max-width: 768px){
+    .cta-buttons{
+        flex-direction: column;
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto 30px auto;
+    }
+
+    .hero-section{
+        padding-top: 40px;
+    }
+
+    .features-grid{
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .feature-card{
+        width: 100%;
+        max-width: 400px;
+    }
+}
+
+@keyframes fadeIn{
+    from{
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to{
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+

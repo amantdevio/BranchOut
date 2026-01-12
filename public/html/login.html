@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../ico/favicon.svg" type="image/x-icon">
+    <title>BranchOut - LogIn</title>
+    <link rel="stylesheet" href="../css/login.css">
+</head>
+<body>
+    <nav class="navbar">
+        <h1 class="siteHeading greeting">BranchOut</h1>
+    </nav>
+    <main>
+        <div class="form-container">    
+            <form id="loginForm" style="display: flex; flex-direction: column;">
+                <h1>Login</h1>
+                
+                <label for="student_id">Student Id</label>
+                <input type="text" name="student_id" placeholder="Please enter your Enrollment Number" id="student_id" requied><br>
+
+                <label for="password">Password</label>
+                <input type="password" name="password" placeholder="Password" id="password" required>
+
+                <div class="msg-container" id="msg-container"></div><br>
+
+                <button type="submit" class="loginBtn" id="login-submit-btn">
+                    <span id="login-btn-text">Login</span>
+                    <div id="login-btn-loader" class="btn-loader" style="display: none;"></div>
+                </button><br>
+            </form>
+            <span class="signupBtn">Don't have an account? <a href="signup.html" style="color: #38bdf8;">Sign Up</a></span>
+            
+        </div>  
+        <div class="subHeadings">
+            <h2 class="subhead"><i>WooHoo!</i> Seems like you already a <span style="color: #38bdf8;">BranchOut</span> user</h2>
+            <h2 class="subhead">Let's Go Chat with students</h2>
+        </div>
+    </main>
+</body>
+<script src="../js/auth.js"></script>
+</html>

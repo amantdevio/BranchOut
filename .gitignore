@@ -1,0 +1,10 @@
+# Secrets
+.env
+
+# Dependencies
+node_modules/
+
+# Linux system files
+*~
+.DS_Store
+.fuse_hidden*
