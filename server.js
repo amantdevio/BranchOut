@@ -18,9 +18,8 @@ const io = new Server(server, {
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 
-app.use(express.static("public"));
-
 app.use('/api/auth',userRoutes);
+app.use(express.static("public"));
 
 handleSocket(io)
 
