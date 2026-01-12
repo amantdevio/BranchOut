@@ -6,6 +6,11 @@ import userRoutes from './routes/authRoutes.js'
 import { handleSocket } from './controllers/socketController.js';
 
 const app = express();
+app.use((req, res, next) => {
+    console.log("LOGGING REQUEST:", req.method, req.url);
+    next();
+});
+
 const server = http.createServer(app);
 
 const io = new Server(server, {
