@@ -321,7 +321,7 @@ document.addEventListener('click',(e)=>{
 
 
 window.addEventListener('pageshow',(e)=>{
-    if (localStorage.getItem('token')) {
-        window.location.replace('chat.html');
+    if(e.persisted||(performance.getEntriesByType("navigation")[0] && performance.getEntriesByType("navigation")[0].type === 'back_forward')){
+        window.location.reload();
     }
 })
