@@ -4,6 +4,8 @@ import http from 'http';
 import {Server} from 'socket.io'
 import userRoutes from './routes/authRoutes.js'
 import { handleSocket } from './controllers/socketController.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 const app = express();
 app.set('trust proxy', 1);
@@ -11,6 +13,9 @@ app.use((req, res, next) => {
     console.log("LOGGING REQUEST:", req.method, req.url);
     next();
 });
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const server = http.createServer(app);
 
@@ -36,7 +41,7 @@ app.get('/health',(req,res)=>{
 })
 
 app.use('/api/auth',userRoutes);
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname),'public'));
 
 handleSocket(io)
 
