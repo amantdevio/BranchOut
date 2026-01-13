@@ -14,6 +14,10 @@ const DBConnect = new pg.Pool({
     connectionTimeoutMillis:2000
 });
 
+DBConnect.on('error',(err)=>{
+    console.error("Unexpected error on idle database client: ", err.message);
+})
+
 DBConnect.connect().then(()=>{
     console.log("Database Connected Successfully");
 }).catch((err)=>{
