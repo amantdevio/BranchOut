@@ -1,4 +1,7 @@
-const socket = io();
+const socket = io({
+    transports:['websoket'],
+    upgrade: false
+});
 let currentRoom=null;
 const token= localStorage.getItem('token');
 if(!token){
