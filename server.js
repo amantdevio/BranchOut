@@ -6,6 +6,7 @@ import userRoutes from './routes/authRoutes.js'
 import { handleSocket } from './controllers/socketController.js';
 
 const app = express();
+app.set('trust proxy', 1);
 app.use((req, res, next) => {
     console.log("LOGGING REQUEST:", req.method, req.url);
     next();
@@ -30,6 +31,10 @@ io.engine.on("connection",(rawSocket)=>{
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 
+app.get('/health',(req,res)=>{
+    res.status(200).send("Server is healthy");
+})
+
 app.use('/api/auth',userRoutes);
 app.use(express.static("public"));
 
@@ -37,5 +42,5 @@ handleSocket(io)
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT,'0.0.0.0',()=>{
-    console.log(`Server running on http://localhost:${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 })
