@@ -1,15 +1,16 @@
 let waitingQueue=[];
-let onlineCount = 0;
 const activeChat = new Map();
 const userSockets = new Map();
 
 export const handleSocket=(io)=>{
     io.on('connection',(socket)=>{
-        onlineCount++;
-        io.emit('online-update',{
-                    count:onlineCount
-                })
+        const syncCount = () =>{
+            io.emit('online-update',{
+                count:io.engine.clientsCount
+            })
+        }
           
+        syncCount();
         
         socket.on('find-partner',(data)=>{
             const myName = data.pseudonym;
@@ -38,7 +39,7 @@ export const handleSocket=(io)=>{
             }
 
 // 2. State Calculations
-    const othersOnline = onlineCount - 1;
+    const othersOnline = io.engine.clientsCount - 1;
     const peopleInChats = activeChat.size;
     // Calculation: Total people NOT in a chat (excluding yourself)
     const availableOthers = othersOnline - peopleInChats;
@@ -132,14 +133,10 @@ export const handleSocket=(io)=>{
             });
         });
 
-        socket.on('disconnect',()=>{
-            onlineCount--;
-            io.emit('online-update',{
-                    count:onlineCount
-                })
-                
+        socket.on('disconnect',()=>{                
             waitingQueue=waitingQueue.filter(s=>s.id != socket.id);
 
+            syncCount();
         });
 
         socket.on('typing',({roomId,isTyping})=>{
