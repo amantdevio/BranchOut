@@ -41,7 +41,7 @@ app.get('/health',(req,res)=>{
 })
 
 app.use('/api/auth',userRoutes);
-app.use(express.static(path.join(__dirname),'public'));
+app.use(express.static(path.join(__dirname,'public')));
 
 handleSocket(io)
 
