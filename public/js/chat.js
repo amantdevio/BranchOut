@@ -243,6 +243,7 @@ document.getElementById('next-btn').addEventListener('keydown',(e)=>{
 })
 
 signOff.addEventListener('click',()=>{
+    localStorage.removeItem('token');
     window.location.href="login.html";
 })
 
