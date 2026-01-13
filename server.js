@@ -14,11 +14,18 @@ app.use((req, res, next) => {
 const server = http.createServer(app);
 
 const io = new Server(server, {
+    pingTimeout: 10000,
+    pingInterval: 5000,
+    transports:['websocket'],
     cors: {
         origin: '*',
         methods: ["GET", "POST"]
     }
 });
+
+io.engine.on("connection",(rawSocket)=>{
+    rawSocket.request = null;
+})
 
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
