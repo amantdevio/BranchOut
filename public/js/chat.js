@@ -1,5 +1,5 @@
 const socket = io({
-    transports:['websoket'],
+    transports:['websocket'],
     upgrade: false
 });
 let currentRoom=null;
