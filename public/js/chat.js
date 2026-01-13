@@ -56,6 +56,7 @@ document.getElementById('find-btn').addEventListener('click',()=>{
 })
 
 socket.on('force-logout',()=>{
+    localStorage.removeItem('token');
     alert("Session moved to another tab/device. This tab will now close.");
     window.location.href="login.html";
 })
