@@ -318,3 +318,10 @@ document.addEventListener('click',(e)=>{
     
 });
 
+
+
+window.addEventListener('pageshow',(e)=>{
+    if(e.persisted||(performance.getEntriesByType("navigation")[0] && performance.getEntriesByType("navigation")[0].type === 'back_forward')){
+        window.location.reload();
+    }
+})
