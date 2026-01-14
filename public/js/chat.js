@@ -276,7 +276,7 @@ input.addEventListener('keydown',(e)=>{
     clearTimeout(typingTimeout);
     typingTimeout = setTimeout(()=>{
         socket.emit('typing',{roomId: currentRoom, isTyping:false});
-    },1000);
+    },500);
 });
 
 
