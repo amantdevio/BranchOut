@@ -156,6 +156,10 @@ function sendMessage(){
     const text = input.value.trim();
     if(!text || !currentRoom) return;
 
+    socket.emit('typing',{roomId: currentRoom, isTyping: false});
+
+    clearTimeout(typingTimeout);
+
     socket.emit('send-message',{
         roomId:currentRoom,
         message:text
