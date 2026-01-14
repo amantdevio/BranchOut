@@ -15,15 +15,19 @@ export const handleSocket=(io)=>{
         socket.on('find-partner',(data)=>{
             const myName = data.pseudonym;
             socket.pseudonym = myName;
+            const oldSocketId = userSockets.get(myName);
+
+            if(oldSocketId&&oldSocketId!==socket.id){
+                console.log(`Kicking old session for ${myName}`);
+                io.to(oldSocketId).emit('force-logout');
+                const oldsocket = io.sockets.sockets.get(oldSocketId);
+                if(oldsocket) oldsocket.disconnect();
+            }
             
             // RECONNECTION LOGIC
+            userSockets.set(myName, socket.id);
             if(activeChat.has(myName)){
                 const session = activeChat.get(myName);
-                const oldSocketId = userSockets.get(myName);
-                
-                if(oldSocketId && oldSocketId !== socket.id){
-                    io.to(oldSocketId).emit('force-logout');
-                }
                 
                 socket.join(session.roomId);
                 socket.currentRoom=session.roomId;
@@ -36,7 +40,6 @@ export const handleSocket=(io)=>{
                 });
                 return;
             }
-            userSockets.set(myName, socket.id);
 
 // 2. State Calculations
     const othersOnline = io.engine.clientsCount - 1;
