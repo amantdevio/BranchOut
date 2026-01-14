@@ -111,3 +111,19 @@ loginForm.addEventListener('submit',async (e)=>{
     }
 });
 }
+
+const togglePassword = document.querySelector('#togglePassword');
+const passwordInput = document.querySelector("#password");
+const eyeIcon=document.querySelector("#eyeIcon");
+
+togglePassword.addEventListener('click',()=>{
+    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+    passwordInput.setAttribute
+    ('type',type);
+
+    if(type === 'text'){
+        eyeIcon.innerHTML = `<path d="M9.88 9.88L12 12m.12-2.12L10 12M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><path d="m2 2 20 20"/>`;
+    }else{
+        eyeIcon.innerHTML = `<path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/>`;
+    }
+})
