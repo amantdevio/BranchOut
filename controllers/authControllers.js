@@ -12,20 +12,21 @@ export async function loginUser(req,res){
         return res.status(400).json({message:"Please enter all fields"})
     }
 
-    const normalizeId=student_id.trim().toUpperCase();
+    const identifier = student_id.trim();
+    const upperIdentifier=identifier.toUpperCase();
     
     try{
-        const data = await query(loginUserQuery,[normalizeId]);
+        const data = await query(loginUserQuery,[identifier,upperIdentifier]);
 
         // Check that user is auvailable or not
         if(data.rowCount<=0){
-            return res.status(404).json({message:"Invalid ID or Password"});
+            return res.status(404).json({message:"Invalid ID/Username or Password"});
         }
 
         // Match/Compare the hashed password with the password which user enters to login
         const isMatch = await bcrypt.compare(password,data.rows[0].password);
         if(!isMatch){
-            return res.status(400).json({message:"Invalid ID or Password"});
+            return res.status(400).json({message:"Invalid ID/Username or Password"});
         }
 
         // Generating the token for login session. (making Digital Id Card)
