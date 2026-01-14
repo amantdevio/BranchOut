@@ -225,21 +225,15 @@ function resetToSearching(){
 }
 
 function escapeUser(){
-    msgBox.style.opacity = '0.5';
-
     socket.emit('leave-room',currentRoom);
 
     resetToSearching();
 
-    setTimeout(()=>{
-        socket.emit('find-partner',{pseudonym:myPseudonym});
-        msgBox.style.opacity='1';
-        msgBox.innerHTML=`<p class="system">Searching for someone new...</p>`;
-    },300)
-
+    socket.emit('find-partner',{pseudonym:myPseudonym});
 
     currentRoom=null;
 
+    msgBox.innerHTML=`<p class="system">Searching for someone new...</p>`;
     input.innerHTML='';
 }
 
