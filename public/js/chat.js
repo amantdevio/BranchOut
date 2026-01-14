@@ -170,7 +170,10 @@ function sendMessage(){
     scrollToBottom();
 }
 
-sendBtn.addEventListener('click', sendMessage);
+sendBtn.addEventListener('click', (e)=>{
+    e.preventDefault();
+    sendMessage();
+});
 
 input.addEventListener('keydown',(e)=>{
     if(e.key==="Enter"&& !e.shiftKey){
