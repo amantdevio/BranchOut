@@ -156,6 +156,10 @@ function sendMessage(){
     const text = input.value.trim();
     if(!text || !currentRoom) return;
 
+    socket.emit('typing',{roomId: currentRoom, isTyping: false});
+
+    clearTimeout(typingTimeout);
+
     socket.emit('send-message',{
         roomId:currentRoom,
         message:text
@@ -221,15 +225,21 @@ function resetToSearching(){
 }
 
 function escapeUser(){
+    msgBoc.style.opacity = '0.5';
+
     socket.emit('leave-room',currentRoom);
 
     resetToSearching();
 
-    socket.emit('find-partner',{pseudonym:myPseudonym});
+    setTimeout(()=>{
+        socket.emit('find-partner',{pseudonym:myPseudonym});
+        msgBox.style.opacity='1';
+        msgBox.innerHTML=`<p class="system">Searching for someone new...</p>`;
+    },300)
+
 
     currentRoom=null;
 
-    msgBox.innerHTML=`<p class="system">Searching for someone new...</p>`;
     input.innerHTML='';
 }
 
