@@ -7,6 +7,14 @@ import { handleSocket } from './controllers/socketController.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+process.on('uncaughtException',(err)=>{
+    console.error('SERVER CRASH PREVENTED (Uncaught Exxeption): ',err);
+});
+
+process.on('unhandledRejection',(reason,promise)=>{
+    console.error("SERVER CRASH PREVENTED (Unhandled Rejection): ",reason);
+})
+
 const app = express();
 app.set('trust proxy', 1);
 app.use((req, res, next) => {

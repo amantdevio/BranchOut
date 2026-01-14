@@ -15,20 +15,19 @@ export const handleSocket=(io)=>{
         socket.on('find-partner',(data)=>{
             const myName = data.pseudonym;
             socket.pseudonym = myName;
-
-
+            
+            // RECONNECTION LOGIC
             if(activeChat.has(myName)){
                 const session = activeChat.get(myName);
                 const oldSocketId = userSockets.get(myName);
-
-                if(oldSocketId && oldSocketId != socket.id){
+                
+                if(oldSocketId && oldSocketId !== socket.id){
                     io.to(oldSocketId).emit('force-logout');
                 }
-
+                
                 socket.join(session.roomId);
                 socket.currentRoom=session.roomId;
-                userSockets.set(myName, socket.id);
-
+                
                 socket.emit('match-found',{
                     roomId: session.roomId,
                     partnerName: session.partnerName,
@@ -37,11 +36,11 @@ export const handleSocket=(io)=>{
                 });
                 return;
             }
+            userSockets.set(myName, socket.id);
 
 // 2. State Calculations
     const othersOnline = io.engine.clientsCount - 1;
     const peopleInChats = activeChat.size;
-    // Calculation: Total people NOT in a chat (excluding yourself)
     const availableOthers = othersOnline - peopleInChats;
 
     // 3. Conditional Messaging
@@ -56,8 +55,7 @@ export const handleSocket=(io)=>{
         });
     }
         
-
-            userSockets.set(myName, socket.id);
+            // MATCHMACHING LOGIC
             if(waitingQueue.length>0){
                 const partner=waitingQueue.shift();
 
@@ -88,6 +86,7 @@ export const handleSocket=(io)=>{
                 socket.emit('status','Searching...');
             }
         });
+
         socket.on('leave-room',(roomId)=>{
             const myName = socket.pseudonym;
             const session = activeChat.get(myName);
@@ -102,6 +101,7 @@ export const handleSocket=(io)=>{
                     });
                 }
                 activeChat.delete(myName);
+                activeChat.delete(partnerName);
             }
             socket.to(roomId).emit('partner-left',{
                 sender:myName
@@ -114,26 +114,34 @@ export const handleSocket=(io)=>{
         socket.on('send-message',({roomId,message})=>{
             const myName =  socket.pseudonym;
             const mySession = activeChat.get(myName);
-
+            
+            const sanitzedMessage = message.replace(/<[^>]*>?/gm, '');
             if(mySession){
                 const msgObj={text:message,sender:myName, type:'chat'};
 
                 mySession.messages.push(msgObj);
-                const partnerName=mySession.partnerName;
+
+                if(mySession.messages.length>50)mySession.messages.shift();
                 const partnerSession = activeChat.get(mySession.partnerName);
 
                 if(partnerSession){
                     partnerSession.messages.push(msgObj);
+                    if(partnerSession.messages.length>50) partnerSession.messages.shift();
                 }
             }
-            const sanitzedMessage = message.replace(/<[^>]*>?/gm, '');
             socket.to(roomId).emit("recieve-message",{
-                text:message,
+                text:sanitzedMessage,
                 sender:socket.pseudonym
             });
         });
 
-        socket.on('disconnect',()=>{                
+        socket.on('disconnect',()=>{   
+            const myName = socket.pseudonym;
+            if(myName){
+                if(userSockets.get(myName)===socket.id){
+                    userSockets.delete(myName);
+                }
+            }             
             waitingQueue=waitingQueue.filter(s=>s.id != socket.id);
 
             syncCount();
