@@ -225,7 +225,7 @@ function resetToSearching(){
 }
 
 function escapeUser(){
-    msgBoc.style.opacity = '0.5';
+    msgBox.style.opacity = '0.5';
 
     socket.emit('leave-room',currentRoom);
 
